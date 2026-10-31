@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "id": "xiaomi-audit",
+  "status": "approved-audit-only",
+  "description": "XIAOMI discovery and audit only. No package changes approved; no hardware compatibility claim.",
+  "scope": {},
+  "packages": [],
+  "review": {
+    "basis": "Zero-mutation policy reviewed in source; no real-device cleanup test claimed."
+  }
+}
