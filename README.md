@@ -86,4 +86,4 @@ python3 scripts/build_release.py
 
 Runtime uses the Python standard library. Optional packaging: `python3 -m pip install .` in a virtual environment. See [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), [architecture](docs/ARCHITECTURE.md) and [release checklist](docs/RELEASING.md).
 
-Inspired by the agent-led workflow of [CleanYourTV](https://github.com/Gathin23/cleanyourtv). Independently implemented; no upstream code or device profiles copied. Not affiliated with Xiaomi, Redmi, POCO, Google or any AI provider. Code, documentation and original SVG artwork are [MIT licensed](LICENSE); third-party tools retain their own licenses.
+
