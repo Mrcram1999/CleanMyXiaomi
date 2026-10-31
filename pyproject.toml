@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cleanmyxiaomi"
+version = "0.1.0"
+description = "Audit-first, agent-guided Xiaomi/Redmi/POCO cleanup with explicit consent and exact-state restore"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{name = "CleanMyXiaomi contributors"}]
+keywords = ["xiaomi", "hyperos", "miui", "adb", "privacy", "ai-agent"]
+classifiers = ["Development Status :: 3 - Alpha", "Programming Language :: Python :: 3", "Operating System :: OS Independent"]
+dependencies = []
+
+[project.scripts]
+cleanmyxiaomi = "cleanmyxiaomi.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["cleanmyxiaomi*"]
+
+[tool.setuptools.package-data]
+cleanmyxiaomi = ["data/*.json", "data/profiles/*.json"]
