@@ -1,25 +1,65 @@
-# Setup / Instalación
+# Instalación y conexión
 
-## English
+La [guía principal](../README.md) explica el recorrido completo con comandos para Windows, macOS y Linux. Aquí tienes los detalles de preparación.
 
-1. Install Python 3.10+ from [python.org](https://www.python.org/downloads/) or your trusted OS package manager. Open a terminal in the extracted repository. No runtime dependencies are required.
-2. Run `python3 -m cleanmyxiaomi doctor`. This discovers ADB on PATH, in ANDROID_HOME / ANDROID_SDK_ROOT, or common Android SDK locations. `scripts/adb-guide.sh` and `scripts/adb-guide.ps1` only print help; they never install anything.
-3. If needed, download **SDK Platform Tools** for your OS from [Google's official page](https://developer.android.com/tools/releases/platform-tools). Review the download/license yourself, extract to a folder you control, and add that folder to PATH or use the global `--adb` argument. Do not download a random “ADB installer,” pipe downloads into a shell, or run ADB as administrator/root.
-4. macOS/Linux: use the extracted `platform-tools/adb`. Windows: use `platform-tools/adb.exe` and `py -3 -m cleanmyxiaomi` if `python3` is unavailable. On Windows, USB driver installation may be needed; use the device vendor's signed driver. On Linux, resolve USB group/udev access using your distribution's documentation instead of running this tool with sudo. Hardware access changes require the owner's review.
-5. On the phone, open Settings → About phone. Depending on MIUI/HyperOS, tap the OS/version entry repeatedly until Developer options are enabled. Find Developer options (often under Additional settings) and enable **USB debugging**. Names vary. Do not enable OEM unlocking or extra Xiaomi security overrides for this tool.
-6. Connect with a data-capable USB cable, unlock the phone and approve the computer's RSA debugging prompt only if this is a trusted computer. USB charging alone may not supply a data connection.
-7. Run `devices`, then select the exact serial explicitly. `unauthorized`: approve on the phone. `offline`: reconnect and recheck. No device: try a data cable/port and review drivers. Do not guess the serial or choose the first listed device.
+## 1. Instala Python
 
-ADB may start its local background server during discovery; this is not a package change. Only the local default server and direct USB transport are supported. Unset ADB_SERVER_SOCKET, ANDROID_ADB_SERVER_PORT, ANDROID_ADB_SERVER_ADDRESS and ANDROID_SERIAL if configured. Read-only identity checks require owner user 0, non-root shell UID 2000 and boot serial properties. Unsupported or missing outputs stop the tool.
+Necesitas Python 3.10 o posterior, disponible en [python.org](https://www.python.org/downloads/) o en el gestor de paquetes de confianza de tu sistema. Abre una terminal en la carpeta extraída del proyecto, donde están `README.md` y `cleanmyxiaomi/`.
 
-The tool intentionally does not install ADB automatically: host software installation and vendor license acceptance remain explicit user actions. An agent can guide or perform an authorized installation from a trusted source, but cannot silently accept terms.
+Comprueba `python3 --version` en macOS/Linux o `py -3 --version` en Windows. No hace falta instalar dependencias externas para ejecutar la herramienta desde esa carpeta.
 
-## Español
+## 2. Localiza o instala ADB
 
-Instala Python 3.10 o posterior y ejecuta `doctor` desde la carpeta del proyecto. Si falta ADB, descarga Android SDK Platform Tools desde la página oficial de Google enlazada arriba, revisa sus condiciones y extrae el archivo. Añade la carpeta a PATH o indica `--adb` antes del comando. En Windows puedes utilizar `py -3`.
+Ejecuta `python3 -m cleanmyxiaomi doctor`; en Windows, `py -3 -m cleanmyxiaomi doctor`.
 
-En el teléfono, activa las opciones de desarrollador desde la versión del sistema en «Acerca del teléfono» y después activa «Depuración USB». Los nombres dependen de la versión. No actives el desbloqueo OEM ni opciones adicionales para saltarte restricciones de seguridad. Conecta un cable de datos, desbloquea el móvil y acepta la autorización del ordenador si confías en él.
+El programa busca ADB en PATH, en ANDROID_HOME o ANDROID_SDK_ROOT y en ubicaciones habituales del SDK de Android. Los scripts `scripts/adb-guide.sh` y `scripts/adb-guide.ps1` solo muestran ayuda: no instalan ni descargan nada.
 
-Ejecuta `devices`, identifica tu número de serie y úsalo explícitamente. Si aparece `unauthorized`, falta autorizar en el móvil; si aparece `offline`, revisa la conexión. En Windows pueden hacer falta controladores oficiales; en Linux, permisos USB de tu distribución. No ejecutes la herramienta con root o como administrador para evitar estos controles.
+Si falta ADB:
 
-Los scripts de ayuda no instalan nada. La instalación y sus condiciones requieren tu intervención o autorización específica. Al terminar, desactiva la depuración USB y revoca las autorizaciones si ya no las necesitas.
+1. Abre la [página oficial de Android SDK Platform Tools](https://developer.android.com/tools/releases/platform-tools).
+2. Selecciona la descarga para tu sistema y revisa tú mismo sus condiciones.
+3. Extrae el archivo en una carpeta que controles.
+4. Añade `platform-tools` a PATH o utiliza `--adb` con la ruta completa en cada comando. Ese argumento va antes del comando de la herramienta.
+
+Ejemplos con rutas que debes sustituir:
+
+```powershell
+py -3 -m cleanmyxiaomi --adb "C:\ruta\platform-tools\adb.exe" devices
+```
+
+```sh
+python3 -m cleanmyxiaomi --adb "/ruta/platform-tools/adb" devices
+```
+
+No descargues instaladores ADB de origen desconocido ni ejecutes descargas directamente como scripts. No ejecutes ADB ni este proyecto como administrador o con root para eludir permisos.
+
+En Windows puede ser necesario instalar un controlador USB firmado del fabricante. En Linux, consulta los grupos y reglas USB de tu distribución. Cualquier cambio de permisos del ordenador debe revisarlo su propietario.
+
+## 3. Activa la depuración USB
+
+En el teléfono, abre **Ajustes → Acerca del teléfono**. Pulsa repetidamente la entrada de versión del sistema o compilación que corresponda a tu versión de MIUI/HyperOS hasta activar las opciones de desarrollador.
+
+Busca **Opciones de desarrollador**, a menudo en **Ajustes adicionales**, y activa **Depuración USB**. Los nombres varían. No actives «Desbloqueo OEM» ni otras excepciones de seguridad para utilizar esta herramienta.
+
+Conecta un cable USB de datos, desbloquea la pantalla y acepta el aviso de autorización RSA solo si confías en ese ordenador. Que el móvil cargue no demuestra que el cable permita transmitir datos. El aviso puede aparecer cuando ejecutes ADB.
+
+## 4. Comprueba la conexión
+
+Ejecuta `devices`, identifica tu número de serie y utilízalo explícitamente con `--serial`. Si aparecen varios móviles, no elijas uno por su posición en la lista.
+
+| Estado | Acción |
+| --- | --- |
+| `device` | La conexión está autorizada; continúa con `detect` y verifica el modelo real. |
+| `unauthorized` | Autoriza el ordenador en la pantalla del móvil y repite la comprobación. |
+| `offline` | Reconecta y comprueba de nuevo antes de continuar. |
+| Lista vacía | Revisa cable, puerto, depuración y controladores. |
+
+ADB puede iniciar su servidor local en segundo plano durante la comprobación. Esto no modifica paquetes del móvil. Solo se admite el servidor local predeterminado y una conexión USB directa.
+
+Si tienes configuradas ADB_SERVER_SOCKET, ANDROID_ADB_SERVER_PORT, ANDROID_ADB_SERVER_ADDRESS o ANDROID_SERIAL, revisa y elimina esas variables de esta sesión antes de utilizar la herramienta. La comprobación exige el usuario principal 0, una sesión ADB normal sin root —UID 2000— y los identificadores requeridos del teléfono. Si faltan datos o no se reconoce la salida, se detiene.
+
+## 5. Al terminar
+
+Guarda los informes de forma privada. Si ya no necesitas ADB, desactiva la depuración USB y revoca las autorizaciones del ordenador desde las opciones de desarrollador.
+
+La instalación de software y la aceptación de licencias son acciones explícitas del usuario. Un agente puede orientar o instalar desde una fuente de confianza si está autorizado, pero no debe aceptar condiciones silenciosamente.
