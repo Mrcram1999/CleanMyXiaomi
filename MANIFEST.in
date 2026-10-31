@@ -1,2 +1,2 @@
-include LICENSE NOTICE.md README.md README.es.md PROMPT.md AGENTS.md
+include LICENSE NOTICE.md README.md README.es.md README.en.md PROMPT.md AGENTS.md
 recursive-include cleanmyxiaomi/data *.json
