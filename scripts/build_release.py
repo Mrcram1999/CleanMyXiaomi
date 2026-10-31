@@ -4,7 +4,7 @@ import hashlib
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-TOP = {'README.md', 'README.es.md', 'PROMPT.md', 'AGENTS.md', 'LICENSE', 'NOTICE.md', 'CONTRIBUTING.md', 'SECURITY.md', 'CHANGELOG.md', 'pyproject.toml', '.gitignore', '.gitattributes', 'MANIFEST.in'}
+TOP = {'README.md', 'README.es.md', 'README.en.md', 'PROMPT.md', 'AGENTS.md', 'LICENSE', 'NOTICE.md', 'CONTRIBUTING.md', 'SECURITY.md', 'CHANGELOG.md', 'pyproject.toml', '.gitignore', '.gitattributes', 'MANIFEST.in'}
 DIRS = {'cleanmyxiaomi', 'docs', 'scripts', 'tests', '.github'}
 files = []
 for p in ROOT.rglob('*'):
