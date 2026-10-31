@@ -8,7 +8,7 @@ sys.path.insert(0, str(ROOT))
 from cleanmyxiaomi.policy import DATA, load_profile
 from cleanmyxiaomi.storage import read_json
 
-required = ['README.md', 'README.es.md', 'PROMPT.md', 'AGENTS.md', 'LICENSE', 'NOTICE.md', 'CONTRIBUTING.md', 'SECURITY.md']
+required = ['README.md', 'README.es.md', 'README.en.md', 'PROMPT.md', 'AGENTS.md', 'LICENSE', 'NOTICE.md', 'CONTRIBUTING.md', 'SECURITY.md']
 for path in required:
     assert (ROOT / path).is_file(), f'Missing {path}'
 registry = read_json(DATA / 'registry.json')
