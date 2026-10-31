@@ -1,0 +1,26 @@
+name: Device profile proposal / Propuesta de perfil
+description: Propose evidence-backed support, not a generic package list.
+title: '[Profile proposal] '
+body:
+  - type: markdown
+    attributes:
+      value: 'Read docs/PROFILES.md. A proposal is not approval. Never publish serials or private inventories.'
+  - type: input
+    id: device
+    attributes:
+      label: Exact model, codename, firmware and region
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Package purpose, dependencies, versions and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: recovery
+    attributes:
+      label: Real-device restore and essential-function test evidence
+      description: Clearly mark untested claims. Never invent evidence.
+    validations:
+      required: true
