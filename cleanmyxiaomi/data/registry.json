@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "profiles": {
+    "xiaomi-audit": "ef69dbd2a2421419a092dd7e9191e4e345c2b87cc5a7cdffe77b73fabe0408ad",
+    "redmi-audit": "f1466b205e89234b220050fd35dfb8181f39c7c75ea07bc181326117d482532b",
+    "poco-audit": "5905513bcf13e752e8e26f99a668cd816bdcffb1d5fa3fa78f986c0d5acac3ff"
+  }
+}
