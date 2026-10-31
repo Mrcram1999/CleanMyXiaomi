@@ -1,33 +1,42 @@
-# Restore / Restauración
+# Restauración y recuperación
 
-Preserve the original checkout, plan and journal on your computer before cleanup. The journal embeds the reviewed plan and original target states. It is a state snapshot, not an APK, user-data, firmware or personal-file backup.
+**Si solo has hecho una auditoría con los perfiles incluidos, no necesitas restaurar nada: no se han cambiado paquetes.** Esta guía describe la recuperación de operaciones que llegue a realizar un perfil de limpieza verificado.
 
-## Normal path
+Conserva la versión original del proyecto, el plan y el registro antes de aplicar una limpieza. El registro incorpora el plan revisado y los estados originales de los paquetes. No contiene una copia de los APK, datos de aplicaciones, firmware ni archivos personales.
 
-1. Reconnect the same phone by USB, unlock it and use owner user 0. Keep the same firmware and package versions. Do not run another cleaner.
-2. Run `python3 -m cleanmyxiaomi --serial YOUR_USB_SERIAL restore --journal sessions/cleanup.journal.jsonl`.
-3. Review the displayed device, packages, original states and restore SHA-256. An empty action list means the attempted packages already have their recorded original states.
-4. After explicit approval, rerun with `--apply --approve FULL_RESTORE_SHA256 --confirm-device YOUR_USB_SERIAL`.
-5. Verify phone functions manually. Preserve the journal after restoration; a new cleanup uses a new audit, plan and journal.
+## Restauración normal
 
-Default state 0 is restored using `pm default-state`; explicit state 1 uses `pm enable`. Those commands are built internally with the recorded exact package; the tool does not generate an executable restore script from untrusted text. It restores in reverse order and verifies each result.
+1. Reconecta el mismo teléfono por USB, desbloquéalo y utiliza el usuario principal 0. Deben mantenerse el firmware y las versiones de paquetes registrados. No utilices otro limpiador al mismo tiempo.
+2. Ejecuta la previsualización. Sustituye el número de serie y la ruta por los de tu sesión; en Windows cambia `python3` por `py -3`:
 
-## Interrupted cleanup or restore
+```sh
+python3 -m cleanmyxiaomi --serial TU_SERIAL_USB restore --journal sessions/limpieza.journal.jsonl
+```
 
-Do not rerun cleanup. An `intent` without an `applied` entry may mean the phone changed before the connection failed. Restore inspects the live state and includes only attempted entries still in disabled-user state 3. It does not assume a failed command made no change. If restore itself was interrupted, preview it again and approve the new preview; already-restored states are skipped.
+3. Revisa el teléfono, los paquetes, los estados originales y el SHA-256 mostrado. Una lista de acciones vacía significa que los paquetes intentados ya tienen su estado original registrado.
+4. Solo después de aprobar ese plan de restauración, añade `--apply`, la huella completa y la confirmación del número de serie:
 
-A leftover lock after a killed process is conservative. Verify that no CleanMyXiaomi process is active and the phone is not being managed elsewhere before removing only that device's lock file. Do not remove locks as an automatic retry strategy.
+```sh
+python3 -m cleanmyxiaomi --serial TU_SERIAL_USB restore --journal sessions/limpieza.journal.jsonl --apply --approve SHA256_COMPLETO_DE_RESTAURACION --confirm-device TU_SERIAL_USB
+```
 
-## Refusals and hard limits
+5. Comprueba manualmente las funciones del teléfono. Conserva el registro después de restaurar. Una nueva limpieza requiere otra auditoría, otro plan y otro registro.
 
-- Different serial, boot serial, build, owner user, package version or an unexpected target state: stop. Do not edit identity fields or hashes to force restoration. Gather the original and current state privately for a device-specific review.
-- Missing, corrupt or truncated journal: keep the original bytes. Do not auto-truncate, regenerate or fabricate a journal. A reviewer may use the intact plan and confirmed live state to propose manual recovery; explicit user consent still applies.
-- Changed profile registry: keep the trusted release used for the operation. Routine upgrades must not discard historical recovery material. If a profile was revoked for safety reasons, seek review instead of bypassing it.
-- ADB unavailable or phone not booting: this tool cannot promise recovery. Use the manufacturer's support process. No rooting, flashing or factory reset is performed by this project.
-- No blanket `pm enable` loops; no automatic uninstall/install fallback; no reboot without a separate user decision.
+El estado 0 —valor predeterminado de Android— se recupera con `pm default-state`; el estado 1 —activado explícitamente— con `pm enable`. El motor construye esos comandos con el paquete exacto registrado, actúa en orden inverso y comprueba cada resultado. No genera scripts ejecutables a partir de texto no fiable.
 
-## Español
+## Si se interrumpió una limpieza o restauración
 
-Conserva el plan, el registro y la versión original del proyecto. Reconecta el mismo teléfono, con el mismo firmware y usuario principal. `restore` muestra primero una simulación; solo cambia el móvil al añadir `--apply` y aprobar la huella de esa restauración.
+**No repitas la limpieza.** Una entrada `intent` sin `applied` puede significar que el teléfono cambió antes de perder la conexión. La restauración consulta el estado real e incluye solo las operaciones intentadas cuyos paquetes siguen en el estado 3, desactivados para el usuario.
 
-Si hubo una desconexión, no repitas la limpieza: consulta la restauración. La herramienta comprueba qué operaciones llegaron a aplicarse, incluidas aquellas cuyo resultado no pudo registrarse. Si el registro está dañado, falta ADB o cambió el firmware, se detiene. No edites los datos para forzarla. La reversión de estados no es una copia de seguridad completa ni una garantía de recuperación del teléfono.
+Si se interrumpió la propia restauración, previsualízala otra vez y aprueba el nuevo plan. Los paquetes ya restaurados se omiten.
+
+Si queda un archivo de bloqueo tras cerrar un proceso por la fuerza, comprueba que no se está ejecutando ninguna sesión de CleanMyXiaomi y que nadie está gestionando el teléfono desde otro sitio antes de retirar únicamente el bloqueo de ese dispositivo. No elimines bloqueos como reintento automático.
+
+## Cuándo se detiene la herramienta
+
+- **Otro número de serie, identificador de arranque, firmware, usuario, versión de paquete o estado inesperado:** no edites el plan ni sus huellas para forzar la restauración. Conserva los datos originales y actuales de forma privada para revisarlos.
+- **Registro ausente, dañado o incompleto:** conserva los bytes originales. No recortes, regeneres ni inventes el registro. Un revisor puede proponer una recuperación manual a partir del plan intacto y el estado confirmado, siempre con consentimiento explícito.
+- **Registro de perfiles cambiado:** conserva la versión de confianza utilizada originalmente. Si un perfil fue retirado por seguridad, consulta el problema antes de ejecutar una versión antigua o saltarte controles.
+- **ADB inaccesible o el teléfono no arranca:** esta herramienta no puede garantizar la recuperación. Recurre al soporte del fabricante. El proyecto no obtiene root, flashea ni restablece el móvil de fábrica.
+
+Nunca actives todos los paquetes indiscriminadamente. No hay una alternativa automática de desinstalar/reinstalar ni se reinicia el móvil sin una decisión independiente del usuario. Revertir estados no equivale a recuperar una copia de seguridad completa.
