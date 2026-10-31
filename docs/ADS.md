@@ -1,14 +1,25 @@
-# Advertising settings / Ajustes de publicidad
+# Revisar los ajustes de publicidad
 
-Use this as a manual checklist, not as an automatic script. Menu names and availability depend on model, region and firmware. Ask the owner what they see; never invent a hidden settings key or disable a security application to reach an advertising toggle.
+Esta es una guía **manual**, no un script de eliminación de anuncios. Los menús dependen del modelo, la región y el firmware. Comprueba qué opciones existen realmente en tu teléfono; no inventes ajustes ocultos ni desactives la aplicación de seguridad para encontrar un control publicitario.
 
-1. **Personalization:** Xiaomi documents an advertising-personalization control. For example, its Xiaomi 14T support page explicitly says turning it off does not change the number of system-app ads. Explain this distinction before suggesting the setting.
-2. **Per-app recommendations:** Where the actual app exposes recommendation, promotional content or ad controls, explain that specific toggle and let the user choose. Xiaomi documents separate controls within some system apps. Record what was changed and how to return to it; those manual changes are not covered by the package journal.
-3. **Promotional notifications:** The user may review notification categories in Android settings. Disabling all notifications can also hide useful alerts; do not treat it as a universal fix.
-4. **Unknown or absent controls:** Report the limitation. Do not revoke arbitrary permissions, disable Security/Updater/account services, change DNS, install a VPN or use a generic MSA/GetApps list as an unverified substitute.
+## 1. Distingue personalización y cantidad de anuncios
 
-No claim is made about ads in YouTube, Instagram, games, websites or third-party applications. This release does not automate MSA revocation or vendor settings. An identifier found on the web is not an approved package profile.
+Xiaomi documenta un control de personalización de anuncios. En su guía del Xiaomi 14T explica que desactivarlo no cambia la cantidad de anuncios de las aplicaciones del sistema. Evitar anuncios personalizados no significa eliminar toda la publicidad.
 
-**Español:** desactivar los anuncios personalizados no significa eliminar todos los anuncios. Revisa únicamente los controles que existan en tu versión: personalización, recomendaciones dentro de cada aplicación y categorías de notificaciones. Explica los efectos secundarios antes de cambiarlos. Esos cambios manuales no se revierten con el registro de paquetes; anota cómo deshacerlos. Si no aparece una opción, no inventes comandos ni desactives componentes esenciales.
+## 2. Revisa las recomendaciones de cada aplicación
 
-Sources: [Xiaomi 14T personalization](https://www.mi.com/global/support/faq/details/KA-507647/), [Redmi Note 13 Pro advertising controls](https://www.mi.com/global/support/faq/details/KA-492666/), [Xiaomi privacy support](https://privacy.mi.com/support/faq?locale=en). Checked 2026-10-31; recheck the exact model's documentation before advising a specific menu path.
+Si la aplicación concreta muestra controles de recomendaciones, contenido promocional o publicidad, lee su descripción y decide si quieres desactivarlos. No todas las versiones tienen los mismos controles. Anota qué cambiaste y cómo volver al ajuste anterior.
+
+**Los cambios manuales de ajustes no se guardan ni se revierten con el registro de paquetes de CleanMyXiaomi.**
+
+## 3. Revisa las notificaciones promocionales
+
+Puedes consultar las categorías de notificaciones de la aplicación en Ajustes. Desactivar todas las notificaciones también puede ocultar avisos útiles; revisa las categorías disponibles antes de decidir.
+
+## 4. Si no aparece una opción, detente
+
+Informa de esa limitación. No revoques permisos arbitrarios, desactives Seguridad, actualizaciones o cuentas, cambies DNS ni instales una VPN como sustituto automático. Una lista genérica de MSA/GetApps encontrada en Internet no es un perfil de paquetes aprobado.
+
+Esta versión no automatiza la revocación de MSA ni los ajustes del fabricante. Tampoco promete eliminar anuncios de YouTube, Instagram, juegos, páginas web u otras aplicaciones de terceros.
+
+Fuentes consultadas el 31 de octubre de 2026: [personalización en Xiaomi 14T](https://www.mi.com/global/support/faq/details/KA-507647/), [publicidad en Redmi Note 13 Pro](https://www.mi.com/global/support/faq/details/KA-492666/) y [soporte de privacidad de Xiaomi](https://privacy.mi.com/support/faq?locale=en). Comprueba la documentación de tu modelo antes de seguir una ruta de menús concreta.
